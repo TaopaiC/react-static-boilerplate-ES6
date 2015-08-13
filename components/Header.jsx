@@ -19,6 +19,7 @@ export default class Header extends React.Component {
         <div className='mxn2'>
           <Link to='/' className='button button-transparent'>Index</Link>
           <Link to='/about/' className='button button-transparent'>About</Link>
+          <Link to='/cats/' className='button button-transparent'>Cats</Link>
         </div>
       </header>
     )
