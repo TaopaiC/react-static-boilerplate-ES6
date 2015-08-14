@@ -34,6 +34,9 @@ module.exports = {
     },
 
   plugins: [
+    new webpack.ProvidePlugin({
+     'fetch': 'imports?this=>global&self=>global!exports?global.fetch!whatwg-fetch'
+    }),
     new StaticSiteGeneratorPlugin('bundle.js', data.routes, data)
   ],
 

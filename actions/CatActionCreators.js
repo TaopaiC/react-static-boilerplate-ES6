@@ -1,5 +1,4 @@
 import alt from '../alt';
-import fetch from 'isomorphic-fetch';
 
 class CatActions {
   fetchCats() {
