@@ -7,6 +7,8 @@ import co from 'co'
 
 if (typeof document !== 'undefined') {
   var initialProps = JSON.parse(document.getElementById('initial-props').innerHTML);
+  var initialStores = document.getElementById('initial-stores').innerHTML;
+  alt.bootstrap(initialStores);
   Router.run(Routes, Router.HistoryLocation, function (Handler) {
     React.render(React.createElement(Handler, initialProps), document)
   })

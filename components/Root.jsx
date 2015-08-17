@@ -3,6 +3,7 @@ import React  from 'react'
 import Router from 'react-router'
 import Header from './Header.jsx'
 import css    from '../css/base.css'
+import alt    from '../alt'
 
 let RouteHandler = Router.RouteHandler
 
@@ -19,6 +20,10 @@ export default class Root extends React.Component {
       __html: safeStringify(this.props)
     }
 
+    let initialStores = {
+      __html: safeString(alt.takeSnapshot())
+    }
+
     return (
       <html>
         <head>
@@ -32,6 +37,10 @@ export default class Root extends React.Component {
             id='initial-props'
             type='application/json'
             dangerouslySetInnerHTML={initialProps} />
+          <script
+            id='initial-stores'
+            type='application/json'
+            dangerouslySetInnerHTML={initialStores} />
           <script src='/bundle.js' />
         </body>
       </html>
@@ -41,4 +50,8 @@ export default class Root extends React.Component {
 
 function safeStringify (obj) {
   return JSON.stringify(obj).replace(/<\/script/g, '<\\/script').replace(/<!--/g, '<\\!--')
+}
+
+function safeString (obj) {
+  return obj.replace(/<\/script/g, '<\\/script').replace(/<!--/g, '<\\!--')
 }
