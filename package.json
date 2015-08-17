@@ -30,6 +30,8 @@
   },
   "dependencies": {
     "alt": "^0.17.1",
+    "babel-runtime": "^5.8.20",
+    "co": "^4.6.0",
     "whatwg-fetch": "^0.9.0"
   }
 }

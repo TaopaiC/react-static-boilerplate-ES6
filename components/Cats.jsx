@@ -8,8 +8,7 @@ var Cats = React.createClass({
     return CatStore.getState();
   },
 
-  componentDidMount: function() {
-    console.log('did');
+  componentWillMount: function() {
     CatStore.listen(this.onCatStoreChange);
     CatActions.fetchCats();
   },

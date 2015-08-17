@@ -12,35 +12,21 @@ var rewriteUrl = function(replacePath) {
     };
 };
 
-var cats_api_data = [
-  {
-    "id": 1,
-    "name": "Pow Cat",
-    "description": "This is a cat"
-  },
-  {
-    "id": 2,
-    "name": "Pow Cat",
-    "description": "This is a cat"
-  }
-];
-
-data['stores'] = {};
-data['stores']['CatStore'] = { "cats" : cats_api_data };
-
 module.exports = {
   entry: './entry.js',
 
   output: {
     filename: 'bundle.js',
     path: __dirname + '/public',
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
+    pathinfo: true
   },
 
   module: {
       loaders: [
-        { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
-        { test: /\.jsx$/, exclude: /node_modules/, loader: 'babel-loader' },
+        { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader',
+          query: { optional: ['runtime'], stage: 0 }
+        },
         {
           test: /\.css/,
           exclude: /colors\.css/,
