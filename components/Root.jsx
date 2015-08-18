@@ -12,9 +12,11 @@ export default class Root extends React.Component {
   constructor(props) {
       super(props)
       title: props.string
+      assets: props.array
   }
 
   render () {
+    let jsfile = '/' + this.props.assets['main']
 
     let initialProps = {
       __html: safeStringify(this.props)
@@ -41,7 +43,7 @@ export default class Root extends React.Component {
             id='initial-stores'
             type='application/json'
             dangerouslySetInnerHTML={initialStores} />
-          <script src='/bundle.js' />
+          <script src={jsfile} />
         </body>
       </html>
     )

@@ -19,7 +19,7 @@ module.exports = {
   entry: './entry.js',
 
   output: {
-    filename: 'bundle.js',
+    filename: process.env.NODE_ENV === 'production' ? '[name]-[hash].js' : '[name].js',
     path: __dirname + '/public',
     libraryTarget: 'umd',
     pathinfo: true
@@ -42,7 +42,7 @@ module.exports = {
     new webpack.ProvidePlugin({
       'fetch': 'imports?this=>global&self=>global!exports?global.fetch!whatwg-fetch'
     }),
-    new StaticSiteGeneratorPlugin('bundle.js', data.routes, data, {FETCH: nodeFetch, API_PREFIX: api_prefix})
+    new StaticSiteGeneratorPlugin('main', data.routes, data, {FETCH: nodeFetch, API_PREFIX: api_prefix})
   ],
 
   cssnext: {
