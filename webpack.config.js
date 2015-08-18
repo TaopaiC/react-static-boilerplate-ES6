@@ -1,6 +1,9 @@
 var StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin')
 var data = require('./data')
 var webpack = require('webpack');
+var nodeFetch = require('node-fetch');
+
+var api_prefix = 'http://rawgit.com/TaopaiC/78df3397f3eaf715bbb3/raw/9a737c0886bb3bd7e8469fd2676212b20775da03/';
 
 // from jamon https://github.com/webpack/webpack-dev-server/pull/127#issuecomment-90702687
 var rewriteUrl = function(replacePath) {
@@ -37,9 +40,9 @@ module.exports = {
 
   plugins: [
     new webpack.ProvidePlugin({
-     'fetch': 'imports?this=>global&self=>global!exports?global.fetch!whatwg-fetch'
+      'fetch': 'imports?this=>global&self=>global!exports?global.fetch!whatwg-fetch'
     }),
-    new StaticSiteGeneratorPlugin('bundle.js', data.routes, data)
+    new StaticSiteGeneratorPlugin('bundle.js', data.routes, data, {FETCH: nodeFetch, API_PREFIX: api_prefix})
   ],
 
   cssnext: {
@@ -57,7 +60,7 @@ module.exports = {
       {
         path: /^\/api\/(.*)/,
         changeOrigin: true,
-        target: 'http://rawgit.com/TaopaiC/78df3397f3eaf715bbb3/raw/9a737c0886bb3bd7e8469fd2676212b20775da03/',
+        target: api_prefix,
         rewrite: rewriteUrl("/$1")
       }
     ]

@@ -1,40 +1,15 @@
 import alt from '../alt';
-
-var fetchCatsApi = function() {
-  return fetch('/api/cats.json', {
-  }).then(function(response) {
-    return response.json();
-  });
-};
-
-var cats_api_data = [
-  {
-    "id": 1,
-    "name": "local Pow Cat 1",
-    "description": "This is a cat"
-  },
-  {
-    "id": 2,
-    "name": "local Pow Cat 2",
-    "description": "This is a cat"
-  }
-];
-
-var localFetchCatsApi = function() {
-  return new Promise(function(resolve, reject) {
-    setTimeout(function() {
-      resolve(cats_api_data);
-    }, 500);
-  });
-};
+import CatsApi from '../helpers/CatsApi';
 
 class CatActions {
   fetchCats() {
     var that = this;
     alt.resolve(new Promise((resolve) => {
-      let api = localFetchCatsApi()
+      let api = CatsApi.list()
       api.then((response) => {
         this.dispatch(response);
+      }).catch((error) => {
+        console.error(error);
       });
       api.then(resolve, resolve);
     }));
