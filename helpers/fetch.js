@@ -1,4 +1,3 @@
-const _fetch = (typeof fetch !== 'undefined') ? fetch : undefined;
-const fetch = (typeof FETCH !== 'undefined') ? FETCH : _fetch;
+const fetch = (typeof FETCH !== 'undefined') ? FETCH : require('whatwg-fetch');
 
 export default fetch;

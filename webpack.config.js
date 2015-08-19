@@ -37,14 +37,12 @@ module.exports = {
           test: /\.css/,
           exclude: /colors\.css/,
           loader: 'css-loader!cssnext-loader'
-        }
+        },
+        { test: require.resolve('whatwg-fetch'), loader: 'imports?this=>global&self=>global!exports?global.fetch' }
       ]
     },
 
   plugins: [
-    new webpack.ProvidePlugin({
-      'fetch': 'imports?this=>global&self=>global!exports?global.fetch!whatwg-fetch'
-    }),
     new StaticSiteGeneratorPlugin('main', data.routes, data)
   ],
 
