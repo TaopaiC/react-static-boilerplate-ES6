@@ -19,19 +19,29 @@ global.FETCH = nodeFetch;
 global.API_PREFIX = api_prefix;
 
 module.exports = {
-  entry: './entry.js',
+  entry: {
+    'server': ['./entry.js'],
+    'main': [
+      'webpack-dev-server/client?http://0.0.0.0:8080/',
+      'webpack/hot/only-dev-server',
+      './entry.js'
+    ]
+  },
 
   output: {
     filename: process.env.NODE_ENV === 'production' ? '[name]-[hash].js' : '[name].js',
     path: __dirname + '/public',
+    publicPath: "/",
     libraryTarget: 'umd',
     pathinfo: true
   },
 
   module: {
       loaders: [
-        { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader',
-          query: { optional: ['runtime'], stage: 0 }
+        {
+          test: /\.jsx?$/,
+          exclude: /node_modules/,
+          loaders: process.env.NODE_ENV === 'production' ? ['babel-loader?optional=runtime&stage=0'] : ['react-hot', 'babel-loader?optional=runtime&stage=0']
         },
         {
           test: /\.css/,
@@ -43,7 +53,8 @@ module.exports = {
     },
 
   plugins: [
-    new StaticSiteGeneratorPlugin('main', data.routes, data)
+    new webpack.NoErrorsPlugin(),
+    new StaticSiteGeneratorPlugin('server', data.routes, data)
   ],
 
   cssnext: {
@@ -57,6 +68,7 @@ module.exports = {
   devtool: 'cheap-source-map',
 
   devServer: {
+    contentBase: __dirname + '/public',
     proxy: [
       {
         path: /^\/api\/(.*)/,

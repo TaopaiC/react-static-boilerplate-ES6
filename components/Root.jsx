@@ -16,7 +16,7 @@ export default class Root extends React.Component {
   }
 
   render () {
-    let jsfile = '/' + this.props.assets['main']
+    let jsfile = this.props.assets['main']
 
     let initialProps = {
       __html: safeStringify(this.props)

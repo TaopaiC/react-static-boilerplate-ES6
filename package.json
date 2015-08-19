@@ -6,7 +6,7 @@
   "scripts": {
     "webpack": "webpack --progress --colors",
     "prod": "NODE_ENV=production webpack -p --progress --colors",
-    "dev": "webpack-dev-server --progress --colors",
+    "dev": "webpack-dev-server --progress --colors --hot",
     "start": "npm run dev"
   },
   "author": "Brent Jackson",
@@ -33,6 +33,7 @@
     "babel-runtime": "^5.8.20",
     "co": "^4.6.0",
     "node-fetch": "^1.3.2",
+    "react-hot-loader": "^1.2.8",
     "whatwg-fetch": "^0.9.0"
   }
 }
