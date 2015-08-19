@@ -15,6 +15,9 @@ var rewriteUrl = function(replacePath) {
     };
 };
 
+global.FETCH = nodeFetch;
+global.API_PREFIX = api_prefix;
+
 module.exports = {
   entry: './entry.js',
 
@@ -42,7 +45,7 @@ module.exports = {
     new webpack.ProvidePlugin({
       'fetch': 'imports?this=>global&self=>global!exports?global.fetch!whatwg-fetch'
     }),
-    new StaticSiteGeneratorPlugin('main', data.routes, data, {FETCH: nodeFetch, API_PREFIX: api_prefix})
+    new StaticSiteGeneratorPlugin('main', data.routes, data)
   ],
 
   cssnext: {
