@@ -51,6 +51,10 @@ var webpackConfig = {
       ]
     },
 
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
+
   plugins: [
     new webpack.NoErrorsPlugin(),
     new StaticSiteGeneratorPlugin(isProduction() ? 'main' : 'server', data.routes, data)
