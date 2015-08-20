@@ -15,21 +15,20 @@ var rewriteUrl = function(replacePath) {
     };
 };
 
+var isProduction = function() {
+  return process.env.NODE_ENV === 'production';
+};
+
 global.FETCH = nodeFetch;
 global.API_PREFIX = api_prefix;
 
-module.exports = {
+var webpackConfig = {
   entry: {
-    'server': ['./entry.js'],
-    'main': [
-      'webpack-dev-server/client?http://0.0.0.0:8080/',
-      'webpack/hot/only-dev-server',
-      './entry.js'
-    ]
+    'main': ['./entry.js']
   },
 
   output: {
-    filename: process.env.NODE_ENV === 'production' ? '[name]-[hash].js' : '[name].js',
+    filename: isProduction() ? '[name]-[hash].js' : '[name].js',
     path: __dirname + '/public',
     publicPath: "/",
     libraryTarget: 'umd',
@@ -41,7 +40,7 @@ module.exports = {
         {
           test: /\.jsx?$/,
           exclude: /node_modules/,
-          loaders: process.env.NODE_ENV === 'production' ? ['babel-loader?optional=runtime&stage=0'] : ['react-hot', 'babel-loader?optional=runtime&stage=0']
+          loaders: isProduction() ? ['babel-loader?optional=runtime&stage=0'] : ['react-hot', 'babel-loader?optional=runtime&stage=0']
         },
         {
           test: /\.css/,
@@ -54,7 +53,7 @@ module.exports = {
 
   plugins: [
     new webpack.NoErrorsPlugin(),
-    new StaticSiteGeneratorPlugin('server', data.routes, data)
+    new StaticSiteGeneratorPlugin(isProduction() ? 'main' : 'server', data.routes, data)
   ],
 
   cssnext: {
@@ -78,4 +77,16 @@ module.exports = {
       }
     ]
   }
+};
+
+if (!isProduction()) {
+  // add server and main entry for hot-module-replacement
+  var entry = webpackConfig.entry;
+  entry['server'] = entry['main'];
+  entry['main'] = [
+    'webpack-dev-server/client?http://0.0.0.0:8080/',
+    'webpack/hot/only-dev-server',
+  ].concat(entry['main']);
 }
+
+module.exports = webpackConfig;
