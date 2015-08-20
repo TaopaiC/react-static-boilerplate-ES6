@@ -11,6 +11,15 @@ var fetchCatsApi = function() {
   return api;
 };
 
+var fetchCatApi = function(id) {
+  let api = fetch(prefix + "/cat_" + id +".json")
+    .then(function(res) {
+      return res.json();
+    });
+
+  return api;
+};
+
 var localFetchCatsApi = function() {
   var cats_api_data = [
     {
@@ -32,5 +41,6 @@ var localFetchCatsApi = function() {
 };
 
 export default {
-  list: fetchCatsApi
+  list: fetchCatsApi,
+  get: fetchCatApi
 };

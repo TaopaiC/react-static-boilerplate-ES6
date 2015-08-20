@@ -15,7 +15,16 @@ class CatActions {
     }));
   }
   fetchCat(id) {
-    this.dispatch({});
+    var that = this;
+    alt.resolve(new Promise((resolve) => {
+      let api = CatsApi.get(id)
+      api.then((response) => {
+        this.dispatch(response);
+      }).catch((error) => {
+        console.error(error);
+      });
+      api.then(resolve, resolve);
+    }));
   }
 }
 

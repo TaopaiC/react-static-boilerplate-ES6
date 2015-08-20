@@ -10,7 +10,9 @@ module.exports = {
   routes: [
     '/',
     '/about/',
-    '/cats/'
+    '/cats/',
+    '/cats/1',
+    '/cats/2'
   ]
 }
 

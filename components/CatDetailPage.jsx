@@ -1,12 +1,15 @@
-import connectToStores from 'alt/utils/connectToStores';
 import React from 'react';
 import CatStore from '../stores/CatStore';
 import CatActions from '../actions/CatActionCreators';
-import Cat from './Cat';
+import CatDetail from './CatDetail';
+import _ from 'lodash';
 
-var Cats = React.createClass({
+var CatDetailPage = React.createClass({
   getInitialState: function() {
-    return CatStore.getState();
+    var state = CatStore.getState();
+    var cats = state['cats'];
+    var cat = _.find(cats, 'id', this.props.catId) || {};
+    return {cat: cat};
   },
 
   componentWillMount: function() {
@@ -19,22 +22,17 @@ var Cats = React.createClass({
   },
 
   onCatStoreChange: function(state) {
-    this.setState(state);
+    var cats = state['cats'];
+    var cat = _.find(cats, 'id', this.props.catId) || {};
+    return {cat: cat};
   },
 
   render: function() {
     return (
-      <ul>
-        {this.state.cats.map((cat) => {
-          return (
-            <Cat key={cat.id} cat={cat}/>
-          );
-        })}
-      </ul>
+      <CatDetail cat={this.state.cat}/>
     );
   }
 });
 
-// class Cats extends React.Component {
+export default CatDetailPage;
 
-export default Cats;
